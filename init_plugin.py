@@ -733,12 +733,48 @@ def create_plugin(base_path: Path, config: dict[str, str], selected: set[int]) -
         print(f"  生成文件: {path.relative_to(base_path)}")
 
 
+def show_generation_mode() -> str:
+    """选择生成模式：覆盖本地或生成新插件。"""
+    print("=" * 60)
+    print("选择生成模式")
+    print("=" * 60)
+    print()
+    print("  [1] 覆盖本地 - 在当前目录直接生成插件（覆盖现有文件）")
+    print("       适用于：基于模板修改开发自己的插件")
+    print()
+    print("  [2] 生成新插件 - 在父目录创建新的插件目录")
+    print("       适用于：创建全新的插件项目")
+    print()
+    print("-" * 60)
+    print()
+    
+    while True:
+        choice = input("请选择 [1/2] (默认: 2): ").strip()
+        
+        if not choice:
+            choice = "2"
+        
+        if choice == "1":
+            print("  → 选择: 覆盖本地模式")
+            print()
+            return "local"
+        elif choice == "2":
+            print("  → 选择: 生成新插件模式")
+            print()
+            return "new"
+        else:
+            print("  ⚠ 无效选择，请输入 1 或 2")
+
+
 def main() -> int:
     """主入口函数。"""
     print("=" * 60)
     print("GSUID 插件模板 - 交互式生成器")
     print("=" * 60)
     print()
+
+    # 步骤 0: 选择生成模式
+    generation_mode = show_generation_mode()
 
     # 步骤 1: 基础配置
     config = show_basic_config()
@@ -761,9 +797,25 @@ def main() -> int:
     print("=" * 60)
     print()
 
-    # 生成到模板目录的父目录（与模板目录同级）
+    # 根据模式确定输出目录
     script_dir = Path(__file__).parent
-    output_dir = script_dir.parent
+    if generation_mode == "local":
+        # 覆盖本地：在当前目录生成
+        output_dir = script_dir
+        print(f"模式: 覆盖本地 ({output_dir})")
+        print("⚠️  警告: 这将覆盖当前目录中的现有文件！")
+        print()
+        
+        # 再次确认覆盖操作
+        confirm_overwrite = input("确认覆盖? [y/N]: ").strip().lower()
+        if confirm_overwrite not in ("y", "yes"):
+            print("\n已取消。")
+            return 1
+    else:
+        # 生成新插件：在父目录创建新目录
+        output_dir = script_dir.parent
+        print(f"模式: 生成新插件 ({output_dir})")
+
     create_plugin(output_dir, config, selected)
 
     print()
@@ -773,13 +825,23 @@ def main() -> int:
     print()
     print(f"插件位置: {output_dir / config['PluginName']}")
     print()
-    print("下一步:")
-    print("1. 检查生成的代码并根据需要修改")
-    print("2. 编辑 utils/config.py 配置API地址")
-    print("3. 编辑 utils/api/client.py 实现API请求逻辑")
-    print("4. 将插件复制到 gsuid_core/plugins/ 目录")
-    print()
-    print("提示: 模板目录保持不变，可以继续使用 init_plugin.py 生成更多插件")
+    
+    if generation_mode == "local":
+        print("下一步:")
+        print("1. 检查生成的代码并根据需要修改")
+        print("2. 编辑 utils/config.py 配置API地址")
+        print("3. 编辑 utils/api/client.py 实现API请求逻辑")
+        print("4. 运行 gsuid_core 测试插件")
+        print()
+        print("提示: 当前目录已更新为插件代码，可以直接开始开发")
+    else:
+        print("下一步:")
+        print("1. 检查生成的代码并根据需要修改")
+        print("2. 编辑 utils/config.py 配置API地址")
+        print("3. 编辑 utils/api/client.py 实现API请求逻辑")
+        print("4. 将插件复制到 gsuid_core/plugins/ 目录")
+        print()
+        print("提示: 模板目录保持不变，可以继续使用 init_plugin.py 生成更多插件")
 
     return 0
 
