@@ -15,6 +15,16 @@
   <a href="https://github.com/astral-sh/ruff">
     <img src="https://img.shields.io/badge/Linter-Ruff-orange?style=flat-square" alt="Ruff">
   </a>
+  <br>
+  <a href="./docs/method-github-template.md">
+    <img src="https://img.shields.io/badge/Use-GitHub%20Template-green?style=flat-square&logo=github" alt="Use GitHub Template">
+  </a>
+  <a href="./docs/method-template-package.md">
+    <img src="https://img.shields.io/badge/Download-Template%20Package-blue?style=flat-square&logo=download" alt="Download Template">
+  </a>
+  <a href="./docs/method-git-clone.md">
+    <img src="https://img.shields.io/badge/Clone-Git%20Repository-yellow?style=flat-square&logo=git" alt="Git Clone">
+  </a>
 </p>
 
 ## 📖 简介
@@ -32,13 +42,42 @@
 - 🔧 **Web控制台** - 自动注册数据库管理页面
 - 🐍 **代码质量** - 内置 pre-commit 代码格式检查
 
-## 🚀 快速开始
+## 🚀 使用模板
+
+我们提供了 **三种方式** 来使用此模板，选择最适合你的：
+
+| 方式 | 适用场景 | 特点 |
+|------|---------|------|
+| **[方式一：GitHub 模板按钮](./docs/method-github-template.md)** | 需要版本控制 | 点击按钮创建新仓库，保留 Git 历史 |
+| **[方式二：下载模板包](./docs/method-template-package.md)** | 快速开始 | 下载纯净模板包，无 Git 历史 |
+| **[方式三：Git 克隆复制](./docs/method-git-clone.md)** | 熟悉 Git | 手动克隆清理，完全可控 |
+
+### 推荐选择
+
+- 🔰 **新手推荐**：使用 [方式二：下载模板包](./docs/method-template-package.md)，简单直接
+- 💻 **开发者推荐**：使用 [方式一：GitHub 模板按钮](./docs/method-github-template.md)，便于版本管理
+- 🔧 **高级用户**：使用 [方式三：Git 克隆复制](./docs/method-git-clone.md)，完全自定义
+
+---
+
+## 🚀 快速开始（方式三：Git 克隆）
 
 ### 1. 克隆模板
 
 ```bash
 cd gsuid_core/plugins
-cp -r gsuid_plugin_template MyPlugin
+git clone https://github.com/你的组织/gsuid_plugin_template.git
+cd gsuid_plugin_template
+
+# 清理 Git 历史（重要！）
+rm -rf .git
+git init
+git add .
+git commit -m "Initial commit"
+
+# 重命名为你的插件
+cd ..
+mv gsuid_plugin_template MyPlugin
 cd MyPlugin
 ```
 
@@ -264,8 +303,6 @@ pre-commit run --all-files
 ## 📚 参考文档
 
 - [GenshinUID Core 文档](https://github.com/Genshin-bots/gsuid_core)
-- [框架消息流程](docs/message_flow.md)
-- [启动说明](docs/startup.md)
 
 ## 🤝 贡献
 
