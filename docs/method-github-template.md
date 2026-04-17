@@ -13,7 +13,7 @@
 
 ### 步骤 1：点击模板按钮
 
-1. 访问模板仓库主页：`https://github.com/你的组织/gsuid_plugin_template`
+1. 访问模板仓库主页：`https://github.com/Agnes4m/gsuid_core_plugin_template`
 2. 点击页面右上角的绿色按钮 **"Use this template"**
 3. 在下拉菜单中选择 **"Create a new repository"**
 
